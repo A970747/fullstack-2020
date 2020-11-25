@@ -17,12 +17,19 @@ function App() {
       <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
       <button onClick={() => setBad(bad + 1)}>bad</button>
       <h2>statistics</h2>
-      <Statistic stat={good} text='good' />
-      <Statistic stat={neutral} text='neutral' />
-      <Statistic stat={bad} text='bad' />
-      <Statistic stat={allVotes} text='all' />
-      <Statistic stat={averageVote} text='average' />
-      <Statistic stat={positivePercentage} text='positive' />
+      {
+        (allVotes)
+          ? <>
+              <Statistic stat={good} text='good' />
+              <Statistic stat={neutral} text='neutral' />
+              <Statistic stat={bad} text='bad' />
+              <Statistic stat={allVotes} text='all' />
+              <Statistic stat={averageVote} text='average' />
+              <Statistic stat={positivePercentage} text='positive' />
+            </>
+          :
+            <p>No feedback given</p>
+          }
     </div>
   )
 }
