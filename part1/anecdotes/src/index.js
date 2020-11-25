@@ -9,6 +9,8 @@ const App = ({anecdotes}) => {
     setVotes(votes.map((e, i) => (i===index) ? e + 1 : e ))
   }
 
+  let highVoteIndex = votes.findIndex(element => element === Math.max(...votes));
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
@@ -19,6 +21,10 @@ const App = ({anecdotes}) => {
       <button onClick={() => {setSelected(Math.floor((Math.random() * 6)))}}>
         next anecdote
       </button>
+      <p>Anecdote with most votes:</p>
+      {
+        anecdotes[highVoteIndex]
+      }
     </div>
   )
 }
