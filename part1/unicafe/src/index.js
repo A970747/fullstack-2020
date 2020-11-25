@@ -8,7 +8,7 @@ function App() {
   const [bad, setBad] = useState(0)
   const allVotes = good + neutral + bad;
   const averageVote = +(((good * 1) + (bad * -1)) / allVotes).toFixed(2);
-  const positivePercentage = 0 || Math.round((good / allVotes) * 100);
+  const positivePercentage = Math.round((good / allVotes) * 100);
 
   return (
     <div>
