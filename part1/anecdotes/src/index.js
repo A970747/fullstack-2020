@@ -14,7 +14,7 @@ const App = ({anecdotes}) => {
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <p>has {votes[selected]} votes {votes}</p>
+      <p>has {votes[selected]} votes</p>
       <button onClick={() => countVote(selected)}>
         vote
       </button>
