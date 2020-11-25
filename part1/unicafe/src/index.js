@@ -6,6 +6,9 @@ function App() {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const allVotes = good + neutral + bad;
+  const averageVote = +(((good * 1) + (bad * -1)) / allVotes).toFixed(2);
+  const positivePercentage = 0 || Math.round((good / allVotes) * 100);
 
   return (
     <div>
@@ -17,13 +20,16 @@ function App() {
       <Statistic stat={good} text='good' />
       <Statistic stat={neutral} text='neutral' />
       <Statistic stat={bad} text='bad' />
+      <Statistic stat={allVotes} text='all' />
+      <Statistic stat={averageVote} text='average' />
+      <Statistic stat={positivePercentage} text='positive' />
     </div>
   )
 }
 
 function Statistic({text, stat}) {
   return (
-    <p>{text} {stat}</p>
+    <p>{text} {(stat)? stat : 0}</p>
   )
 }
 
