@@ -13,9 +13,9 @@ function App() {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={() => setGood(good + 1)}>good</button>
-      <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
-      <button onClick={() => setBad(bad + 1)}>bad</button>
+      <Button func={setGood} val={good} text="good" />
+      <Button func={setNeutral} val={neutral} text="neutral" />
+      <Button func={setBad} val={bad} text="bad" />
       <h2>statistics</h2>
       {
         (allVotes)
@@ -35,9 +35,11 @@ function App() {
 }
 
 function Statistic({text, stat}) {
-  return (
-    <p>{text} {(stat)? stat : 0}</p>
-  )
+  return <p>{text} {(stat)? stat : 0}</p>
+}
+
+function Button({func, val, text}) {
+  return <button onClick={ () => func(val + 1) }>{text}</button>
 }
 
 ReactDOM.render(
