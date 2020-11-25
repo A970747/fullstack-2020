@@ -18,18 +18,22 @@ function App() {
       <Button func={setBad} val={bad} text="bad" />
       <h2>statistics</h2>
       {
-        (allVotes)
-          ? <>
+      (allVotes)
+        ? <>
+            <table>
+              <tbody>
               <Statistic stat={good} text='good' />
               <Statistic stat={neutral} text='neutral' />
               <Statistic stat={bad} text='bad' />
               <Statistic stat={allVotes} text='all' />
               <Statistic stat={averageVote} text='average' />
               <Statistic stat={positivePercentage} text='positive' />
-            </>
-          :
-            <p>No feedback given</p>
-          }
+              </tbody>
+            </table>
+          </>
+        :
+          <p>No feedback given</p>
+      }
     </div>
   )
 }
