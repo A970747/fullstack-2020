@@ -35,7 +35,12 @@ function App() {
 }
 
 function Statistic({text, stat}) {
-  return <p>{text} {(stat)? stat : 0}</p>
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{(stat)? stat : 0}</td>
+    </tr>
+  )
 }
 
 function Button({func, val, text}) {
