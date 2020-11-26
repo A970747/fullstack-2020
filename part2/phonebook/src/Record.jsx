@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Record = ({name}) => {
+const Record = ({name, number}) => {
 
   return (
     <div>
-      <p>{name}</p>
+      <p>{name} {number}</p>
     </div>
   )
 }
