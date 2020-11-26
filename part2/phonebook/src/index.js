@@ -16,7 +16,10 @@ const App = () => {
 
   function addPerson(event) {
     event.preventDefault();
-    setPersons(persons.concat(personMaker(newName, null)))
+    let allPhonebookNames = persons.map(person => person.name);
+    (!allPhonebookNames.includes(newName))
+      ? setPersons(persons.concat(personMaker(newName, null)))
+      : alert(`${newName} already exists!`)
     setNewName('');
   }
 
