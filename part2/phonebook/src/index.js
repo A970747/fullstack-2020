@@ -5,10 +5,14 @@ import './index.css';
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '040 - 1234567'  }
-  ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newNum, setNewNum ] = useState('')
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  ]);
+  const [ newName, setNewName ] = useState('');
+  const [ newNum, setNewNum ] = useState('');
+  const [ filterValue, setFilterValue ] = useState('')
 
   function handleNameInput(event) {
     event.preventDefault();
@@ -18,6 +22,11 @@ const App = () => {
   function handleNumInput(event) {
     event.preventDefault();
     setNewNum(event.target.value);
+  }
+
+  function handleFilterValueInput(event) {
+    event.preventDefault();
+    setFilterValue(event.target.value);
   }
 
   function addPerson(event) {
@@ -45,6 +54,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <h2>Filter</h2>
+      <div>
+          name: <input placeholder='Filter by...' value={filterValue} 
+          onChange={handleFilterValueInput} />
+      </div>
+      <h2>Add new record</h2>
       <form onSubmit={addPerson} >
         <div>
           name: <input placeholder='enter name...' value={newName} 
@@ -59,8 +74,16 @@ const App = () => {
         </div>
       </form>
 
-      <h2>Numbers</h2>
-      <Numbers persons={persons}/>
+      <h2>People</h2>
+      {
+      (filterValue)
+        ? <Numbers persons={persons.filter(person => {
+            if(person.name.toLowerCase().includes(filterValue.toLowerCase())) {
+              return person
+            }
+          })} />
+        : <Numbers persons={persons}/>
+      }
     </div>
   )
 }
