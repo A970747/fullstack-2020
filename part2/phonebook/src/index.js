@@ -14,21 +14,6 @@ const App = () => {
   const [ newNum, setNewNum ] = useState('');
   const [ filterValue, setFilterValue ] = useState('')
 
-  function handleNameInput(event) {
-    event.preventDefault();
-    setNewName(event.target.value);
-  }
-
-  function handleNumInput(event) {
-    event.preventDefault();
-    setNewNum(event.target.value);
-  }
-
-  function handleFilterValueInput(event) {
-    event.preventDefault();
-    setFilterValue(event.target.value);
-  }
-
   function addPerson(event) {
     event.preventDefault();
     let allPhonebookNames = persons.map(person => person.name);
@@ -49,6 +34,21 @@ const App = () => {
       name,
       number
     }
+  }
+
+  function handleNameInput(event) {
+    event.preventDefault();
+    setNewName(event.target.value);
+  }
+
+  function handleNumInput(event) {
+    event.preventDefault();
+    setNewNum(event.target.value);
+  }
+
+  function handleFilterValueInput(event) {
+    event.preventDefault();
+    setFilterValue(event.target.value);
   }
 
   return (
