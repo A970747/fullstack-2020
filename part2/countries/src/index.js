@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import axios from 'axios';
 import Country from './Country'
+import CountryList from './CountryList'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,7 +29,7 @@ function App() {
       {
         (countryData.length === 1)
           ? <Country data={countryData} />
-          : null
+          : <CountryList data={countryData} setIndexSearch={term => setSearchTerm(term)} />
       }
     </div>
   );

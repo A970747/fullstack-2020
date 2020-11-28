@@ -15,3 +15,14 @@ code {
 img {
   max-width: 200px;
 }
+
+.countryWithButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.countryWithButton > button {
+  margin: 0 5px;
+  padding: 0;
+}
