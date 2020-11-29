@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import axios from 'axios';
-import Country from './Country'
-import CountryList from './CountryList'
+import Country from './Country';
+import CountryList from './CountryList';
+import Weather from './Weather';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,7 +29,10 @@ function App() {
       </p>
       {
         (countryData.length === 1)
-          ? <Country data={countryData} />
+          ? <>
+              <Country data={countryData} />
+              <Weather city={countryData[0].capital} />
+            </>
           : <CountryList data={countryData} setIndexSearch={term => setSearchTerm(term)} />
       }
     </div>
