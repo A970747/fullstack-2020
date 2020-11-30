@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { unstable_concurrentAct } from 'react-dom/test-utils';
 
 function Weather({city}) {
   const [weather, setWeather] = useState({});
