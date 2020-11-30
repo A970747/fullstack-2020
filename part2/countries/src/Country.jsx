@@ -10,7 +10,7 @@ function Country({data: [country]}) {
       <p>Languages: </p>
       <ul>
         {
-          country.languages.map( language => <li>{language.name}</li>)
+          country.languages.map( language => <li key={language.name}>{language.name}</li>)
         }
       </ul>
       <img src={country.flag} alt={`the flag of ${country.name}`}/>

@@ -7,7 +7,7 @@ function CountryList({data, setIndexSearch}) {
       {
         data.map( country => {
           return (
-            <div className="countryWithButton">
+            <div key={country.name} className="countryWithButton">
               <p>{country.name}</p>
               <button onClick={() => setIndexSearch(country.name)}>show</button>
             </div>
