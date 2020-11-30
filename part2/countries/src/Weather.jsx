@@ -12,7 +12,7 @@ function Weather({city}) {
       })
       .then( response => setWeather(response.data))
       .catch(() => console.log('some error'))
-    },[])
+    },[city])
 
   return (
     (weather.current)
