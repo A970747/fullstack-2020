@@ -1,31 +1,38 @@
 import React, { useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
-import RecordList from './RecordList';
+import RecordList from './components/RecordList';
 import recordService from './services/recordService';
 import './index.css';
 
 const App = () => {
   const [ records, setRecords ] = useState([]);
-  const [ name, setname ] = useState('');
-  const [ number, setnumber ] = useState('');
+  const [ name, setName ] = useState('');
+  const [ number, setNumber ] = useState('');
   const [ filterValue, setFilterValue ] = useState('')
 
   useEffect( () => {
     recordService.getRecords().then(records => setRecords(records));
   }, [])
 
-  function addRecord(event) {
+  function createRecord(event) {
     event.preventDefault();
-    let record = recordMaker(name, number);
+    let record = recordFactory(name, number);
 
     recordService.createRecord(record)
-      .then(record => setRecords(records.concat(record)))
+      .then(returnedRecord => setRecords(records.concat(returnedRecord)))
 
-    setname('');
-    setnumber('');
+    setName('');
+    setNumber('');
   }
 
-  function recordMaker(name, numberFromState = null) {
+  function deleteRecord(id, name) {
+    if(window.confirm(`Are you sure you want to delete ${name}?`)) {
+      recordService.deleteRecord(id)
+        .then(setRecords(records.filter(each => each.id !== id)))
+    }
+  }
+
+  function recordFactory(name, numberFromState = null) {
     let number = numberFromState
 
     if(number) {
@@ -39,12 +46,12 @@ const App = () => {
 
   function handleNameInput(event) {
     event.preventDefault();
-    setname(event.target.value);
+    setName(event.target.value);
   }
 
   function handleNumInput(event) {
     event.preventDefault();
-    setnumber(event.target.value);
+    setNumber(event.target.value);
   }
 
   function handleFilterValueInput(event) {
@@ -54,14 +61,16 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+
       <h2>Filter</h2>
       <div>
         name: <input placeholder='Filter by...' value={filterValue} 
         onChange={handleFilterValueInput} />
       </div>
+
       <h2>Add new record</h2>
-      <form onSubmit={addRecord} >
+      <form onSubmit={createRecord} >
         <div>
           name: <input placeholder='enter name...' value={name} 
           onChange={handleNameInput} />
@@ -78,10 +87,12 @@ const App = () => {
       <h2>People</h2>
       {
       (filterValue)
-        ? <RecordList records={records.filter(person => 
-            (person.name.toLowerCase().includes(filterValue.toLowerCase())) ? true : false)}
-          />
-        : <RecordList records={records}/>
+        ? <RecordList records={ records.filter(person => 
+            (person.name.toLowerCase().includes(filterValue.toLowerCase())) 
+              ? true : false) }
+            deleteRecord={id => deleteRecord(id)}
+          />       
+        : <RecordList records={records} deleteRecord={deleteRecord}/>
       }
     </div>
   )

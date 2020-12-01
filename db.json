@@ -1,11 +1,6 @@
 {
   "records": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": 2
@@ -21,34 +16,9 @@
       "id": 4
     },
     {
-      "name": "thios one",
-      "number": "123 - 1231231",
+      "name": "luna lovejoy",
+      "number": "122 - 2222222",
       "id": 5
-    },
-    {
-      "name": "anotha one",
-      "number": "123 - 6433453",
-      "id": 6
-    },
-    {
-      "name": "another one",
-      "number": "123 - 1231231",
-      "id": 7
-    },
-    {
-      "name": "aaanotha one",
-      "number": "123 - 5132412",
-      "id": 8
-    },
-    {
-      "name": "",
-      "number": "",
-      "id": 9
-    },
-    {
-      "name": "",
-      "number": "",
-      "id": 10
     }
   ]
 }
