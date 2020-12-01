@@ -11,16 +11,41 @@ const App = () => {
   const [ filterValue, setFilterValue ] = useState('')
 
   useEffect( () => {
-    recordService.getRecords().then(records => setRecords(records));
+    recordService.getRecords()
+      .then(records => setRecords(records))
+      .catch( error => console.log(error));
   }, [])
 
   function createRecord(event) {
     event.preventDefault();
-    let record = recordFactory(name, number);
 
-    recordService.createRecord(record)
-      .then(returnedRecord => setRecords(records.concat(returnedRecord)))
+    if(records.some(each => each.name.toLowerCase() === name.toLowerCase())) {
+      updateRecord();
+    }
+    else {
+      let record = recordFactory(name, number);
 
+      recordService.createRecord(record)
+        .then(returnedRecord => setRecords(records.concat(returnedRecord)))
+
+      setName('');
+      setNumber('');
+    }
+  }
+
+  function updateRecord() {
+    let tempObj = recordFactory(name,number);
+
+    let recordToUpdate = records.filter( 
+      record => record.name.toLowerCase().includes(name.toLowerCase()))[0]
+
+      if(window.confirm(`${name} already exists. Do you want to replace the existing number?`)) {
+        recordService.updateRecord(recordToUpdate.id, {...recordToUpdate, number: tempObj.number})
+          .then(records => 
+            recordService.getRecords()
+              .then(records => setRecords(records)))
+          .catch(error => console.log(error));
+      }
     setName('');
     setNumber('');
   }
@@ -28,7 +53,8 @@ const App = () => {
   function deleteRecord(id, name) {
     if(window.confirm(`Are you sure you want to delete ${name}?`)) {
       recordService.deleteRecord(id)
-        .then(setRecords(records.filter(each => each.id !== id)))
+        .then(data => setRecords(records.filter(each => each.id !== id)))
+        .catch(error => console.log(error));
     }
   }
 
@@ -87,8 +113,8 @@ const App = () => {
       <h2>People</h2>
       {
       (filterValue)
-        ? <RecordList records={ records.filter(person => 
-            (person.name.toLowerCase().includes(filterValue.toLowerCase())) 
+        ? <RecordList records={ records.filter(record => 
+            (record.name.toLowerCase().includes(filterValue.toLowerCase())) 
               ? true : false) }
             deleteRecord={id => deleteRecord(id)}
           />       

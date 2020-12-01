@@ -7,7 +7,7 @@ const RecordList = ({records, deleteRecord}) => {
       records.map(record => 
         <li key={record.name}>
           {record.name} {record.number}
-          <button onClick={() => deleteRecord(record.id)}>
+          <button onClick={() => deleteRecord(record.id, record.name)}>
             delete
           </button>
         </li>
