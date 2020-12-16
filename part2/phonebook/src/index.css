@@ -35,3 +35,15 @@ li > button:hover {
   background-color: white;
   cursor: pointer;
 }
+
+h1 { 
+  color: green;
+}
+
+.statusGood {
+  border: 1px solid green;
+}
+
+.statusBad {
+  border: 1px solid red;
+}

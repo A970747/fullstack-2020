@@ -9,24 +9,27 @@ const App = () => {
   const [ name, setName ] = useState('');
   const [ number, setNumber ] = useState('');
   const [ filterValue, setFilterValue ] = useState('')
+  const [ statusMessage, setStatusMessage] = useState(null);
 
   useEffect( () => {
     recordService.getRecords()
       .then(records => setRecords(records))
-      .catch( error => console.log(error));
+      .catch( error => updateStatusMessage('statusBad', error));
   }, [])
 
   function createRecord(event) {
     event.preventDefault();
 
-    if(records.some(each => each.name.toLowerCase() === name.toLowerCase())) {
+    if(records.some(record => record.name.toLowerCase() === name.toLowerCase())) {
       updateRecord();
-    }
-    else {
+    } else {
       let record = recordFactory(name, number);
 
-      recordService.createRecord(record)
+      recordService.createRecord({...record, id: Math.floor(Math.random() * 10000)})
         .then(returnedRecord => setRecords(records.concat(returnedRecord)))
+        .catch(error => { 
+          updateStatusMessage('statusBad', error.response.data)
+        })
 
       setName('');
       setNumber('');
@@ -44,7 +47,9 @@ const App = () => {
           .then(records => 
             recordService.getRecords()
               .then(records => setRecords(records)))
-          .catch(error => console.log(error));
+          .catch(error => { 
+            updateStatusMessage('statusBad', error.response.data)
+          });
       }
     setName('');
     setNumber('');
@@ -54,7 +59,9 @@ const App = () => {
     if(window.confirm(`Are you sure you want to delete ${name}?`)) {
       recordService.deleteRecord(id)
         .then(data => setRecords(records.filter(each => each.id !== id)))
-        .catch(error => console.log(error));
+        .catch(error => { 
+          updateStatusMessage('statusBad', error.response.data)
+        });
     }
   }
 
@@ -68,6 +75,13 @@ const App = () => {
     }
 
     return { name, number }
+  }
+
+  function updateStatusMessage(className, error) {
+    setStatusMessage({class: className, message: error.Error});
+    setTimeout(() => {
+      setStatusMessage(null)
+    }, 5000);
   }
 
   function handleNameInput(event) {
@@ -88,7 +102,11 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-
+      {
+      (statusMessage !== null)
+        ? <p className={statusMessage.class}>{statusMessage.message}</p>
+        : <></>
+      }
       <h2>Filter</h2>
       <div>
         name: <input placeholder='Filter by...' value={filterValue} 
