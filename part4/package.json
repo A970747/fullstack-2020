@@ -4,8 +4,19 @@
   "description": "part 4 - testing",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "node_modules/.bin/nodemon index.js",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "MJackson",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "nodemon": "^2.0.6"
+  }
 }
