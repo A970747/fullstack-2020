@@ -7,6 +7,6 @@ const error = (...params) => {
 };
 
 module.exports = {
-  info, 
+  info,
   error,
 };
