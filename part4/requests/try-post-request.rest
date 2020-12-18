@@ -2,8 +2,7 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-  "title": "First blog",
-  "author": "Matt Jackson",
-  "url": "www.pretendURL",
-  "likes": 5
+  "title": "Third blog",
+  "author": "Queen Elizabeth",
+  "likes": 0
 }
