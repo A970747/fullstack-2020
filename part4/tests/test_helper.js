@@ -38,6 +38,13 @@ const blogPostNoUrl = {
   author: 'Testing NoTitleURL',
 };
 
+const updateFirstBlog = {
+  title: 'Updated first blog',
+  author: 'A different Author',
+  url: 'updated URL',
+  likes: 100,
+};
+
 
 const nonExistingId = async () => {
   const blog = new Blog({content: 'willremovethissoon', date: new Date()});
@@ -58,6 +65,7 @@ module.exports = {
   blogPostNoLikes,
   blogPostNoTitle,
   blogPostNoUrl,
+  updateFirstBlog,
   nonExistingId,
   blogsInDb,
 };
