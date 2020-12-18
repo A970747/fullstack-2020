@@ -13,6 +13,7 @@ const app = require('../app');
 const api = supertest(app);
 const Blog = require('../models/blog');
 
+
 beforeEach(async () => {
   await Blog.deleteMany({});
 
@@ -160,8 +161,4 @@ describe('deletion of a blog', () => {
         .delete(`/api/blogs/${validObjectID}`)
         .expect(404);
     });
-});
-
-afterAll(() => {
-  mongoose.connection.close();
 });

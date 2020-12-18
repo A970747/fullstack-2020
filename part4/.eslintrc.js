@@ -1,3 +1,5 @@
+const { off } = require("./models/blog");
+
 module.exports = {
   'env': {
     'commonjs': true,
@@ -16,5 +18,12 @@ module.exports = {
       'error',
       2
     ],
-  },
+    'new-cap': [
+      1, 
+      { 
+        'newIsCap': false
+      },
+    ],
+    'no-underscore-dangle': 0,
+  }
 };
