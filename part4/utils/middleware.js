@@ -13,13 +13,13 @@ const unknownEndpoint = (req, res) => {
 };
 
 const errorHandler = (error, req, res, next) => {
-  logger.error(error._message);
+  logger.error(error.message);
 
   if (error.name === 'CastError') {
-    return res.status(400).send( {Error: 'Malformatted  ID'} );
+    return res.status(400).send( {error: 'Malformatted  ID'} );
   };
   if (error.name === 'ValidationError') {
-    return res.status(400).json( {Error: error.message} );
+    return res.status(400).json( {error: error.message} );
   };
 
   return next(error);

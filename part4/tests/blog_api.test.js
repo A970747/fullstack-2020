@@ -9,12 +9,21 @@ const {
   updateFirstBlog,
   blogsInDb,
 } = require('./test_helper');
+const Blog = require('../models/blog');
 const app = require('../app');
 const api = supertest(app);
-const Blog = require('../models/blog');
+const config = require('../utils/config');
 
 
 beforeEach(async () => {
+  await mongoose.connect(config.URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    },
+  );
   await Blog.deleteMany({});
 
   const blogObjects = initialBlogPosts.map((blog) => new Blog(blog));
@@ -161,4 +170,8 @@ describe('deletion of a blog', () => {
         .delete(`/api/blogs/${validObjectID}`)
         .expect(404);
     });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
 });

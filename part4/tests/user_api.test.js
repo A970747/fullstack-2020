@@ -1,27 +1,39 @@
 const supertest = require('supertest');
 const mongoose = require('mongoose');
-const {usersInDb} = require('./test_helper');
+const {
+  usersInDb,
+} = require('./test_helper');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const app = require('../app');
 const api = supertest(app);
-const User = require('../models/user');
+const config = require('../utils/config');
 
 beforeEach(async () => {
-  console.log('fine in beforeEach');
+  await mongoose.connect(config.URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    },
+  );
   await User.deleteMany({});
 
   const passwordHash = await bcrypt.hash('secretPassword', 10);
   const user = new User({username: 'initial user', passwordHash});
 
   await user.save();
-
 });
 
 describe('with one user in db', ()=> {
-  console.log('fine here');
+  test('gets all users', async () => {
+    await api
+      .get('/api/users')
+      .expect(200);
+  });
 
   test('creation with new user succeeds', async () => {
-    console.log('fine here again');
     const usersAtStart = await usersInDb();
 
     const newUser = {
@@ -42,7 +54,30 @@ describe('with one user in db', ()=> {
     const usernames = usersAtEnd.map((user) => user.username);
     expect(usernames).toContain('mjackson');
   });
-  console.log('fine here after');
+
+  test('create fails w proper status & message if user taken', async () => {
+    const usersAtStart = await usersInDb();
+
+    const newUser = {
+      username: 'initial user',
+      name: 'Another name',
+      password: 'topSecret',
+    };
+
+    const result = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/);
+
+    expect(result.body.error).toContain('`username` to be unique');
+
+    const usersAtEnd = await usersInDb();
+    expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  });
 });
 
-console.log('outside fine here');
+
+afterAll(async () => {
+  await mongoose.connection.close();
+});
