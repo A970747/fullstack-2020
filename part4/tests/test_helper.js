@@ -1,5 +1,6 @@
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const userId = '5fdf86fb33612a3f2adbdd59';
 
 const initialBlogPosts = [
   {
@@ -16,27 +17,61 @@ const initialBlogPosts = [
   },
 ];
 
+const initialUsers = [
+  {
+    username: 'Default User1',
+    name: 'User1',
+    password: 'uruguay',
+  },
+  {
+    username: 'Default User2',
+    name: 'User2',
+    password: 'zimbabwe',
+  },
+];
+
+const userShortPassword = {
+  username: 'Password Tooshort',
+  name: 'SPword',
+  password: '12',
+};
+
+const userShortName = {
+  username: 'Sh',
+  name: 'SPword',
+  password: 'OkayPass',
+};
+
+const userNoName= {
+  name: 'SPword',
+  password: 'OkayPass',
+};
+
 const newBlogPost = {
   title: 'Breaking Bad',
   author: 'Heisenberg',
   url: 'www.pretendURL',
   likes: 20,
+  userid: userId,
 };
 
 const blogPostNoLikes = {
   title: 'Fourth blog',
   author: 'Soul Goodman',
   url: 'www.pretendURL',
+  userid: userId,
 };
 
 const blogPostNoTitle= {
   author: 'Testing NoTitleURL',
   url: 'www.pretendURL',
+  userid: userId,
 };
 
 const blogPostNoUrl = {
   title: 'Test blog',
   author: 'Testing NoTitleURL',
+  userid: userId,
 };
 
 const updateFirstBlog = {
@@ -66,6 +101,10 @@ const usersInDb = async () => {
 
 module.exports = {
   initialBlogPosts,
+  initialUsers,
+  userShortPassword,
+  userShortName,
+  userNoName,
   newBlogPost,
   blogPostNoLikes,
   blogPostNoTitle,

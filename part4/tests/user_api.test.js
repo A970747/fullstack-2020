@@ -1,8 +1,8 @@
 const supertest = require('supertest');
 const mongoose = require('mongoose');
 const {
-  usersInDb,
-} = require('./test_helper');
+  usersInDb, initialUsers, userShortPassword, userShortName,
+  userNoName,} = require('./test_helper');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const app = require('../app');
@@ -20,8 +20,13 @@ beforeEach(async () => {
   );
   await User.deleteMany({});
 
-  const passwordHash = await bcrypt.hash('secretPassword', 10);
-  const user = new User({username: 'initial user', passwordHash});
+
+  const passwordHash = await bcrypt.hash(initialUsers[0].password, 10);
+  const user = new User({
+    username: initialUsers[0].username,
+    name: initialUsers[0].name,
+    passwordHash,
+  });
 
   await user.save();
 });
@@ -58,15 +63,9 @@ describe('with one user in db', ()=> {
   test('create fails w proper status & message if user taken', async () => {
     const usersAtStart = await usersInDb();
 
-    const newUser = {
-      username: 'initial user',
-      name: 'Another name',
-      password: 'topSecret',
-    };
-
     const result = await api
       .post('/api/users')
-      .send(newUser)
+      .send(initialUsers[0])
       .expect(400)
       .expect('Content-Type', /application\/json/);
 
@@ -74,6 +73,34 @@ describe('with one user in db', ()=> {
 
     const usersAtEnd = await usersInDb();
     expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  });
+
+  test('create user with password too short fails with 400', async () => {
+    await api
+      .post('/api/users')
+      .send(userShortPassword)
+      .expect(400);
+  });
+
+  test('create user with non-unique name fails with 400', async () => {
+    await api
+      .post('/api/users')
+      .send(userShortPassword)
+      .expect(400);
+  });
+
+  test('create user with no name fails with 400', async () => {
+    await api
+      .post('/api/users')
+      .send(userNoName)
+      .expect(400);
+  });
+
+  test('create user with name.length < 3 fails with 400', async () => {
+    await api
+      .post('/api/users')
+      .send(userShortName)
+      .expect(400);
   });
 });
 
