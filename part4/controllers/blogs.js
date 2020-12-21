@@ -4,11 +4,13 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 const getTokenFrom = (req) => {
+  //todo decode token, if it exists, and send it to next route - otherwise send auth error response.
   const authorization = req.get('authorization');
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7);
+    authorization.substring(7);
   }
-  return null;
+
+
 };
 
 blogsRouter.get('/', async (req, res) => {

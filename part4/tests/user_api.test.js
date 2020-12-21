@@ -2,7 +2,7 @@ const supertest = require('supertest');
 const mongoose = require('mongoose');
 const {
   usersInDb, initialUsers, userShortPassword, userShortName,
-  userNoName,} = require('./test_helper');
+  userNoName} = require('./test_helper');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const app = require('../app');
