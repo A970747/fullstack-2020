@@ -12,17 +12,12 @@ const requestLogger = (req, res, next) => {
 const tokenExtractor = (req, res, next) => {
   console.log('in the tokenExtractor');
   const authorization = req.get('Authorization');
-  console.log(authorization);
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    console.log(authorization.substring(7));
     const token = authorization.substring(7);
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    console.log('in the TE', token, decodedToken);
-
-    if (!token || !decodedToken.id) {
+    if (!token) {
       return res.status(401).json({error: 'invalid username or password'});
     } else {
-      req.body.decodedToken = decodedToken;
+      req.body.token = token;
       console.log('middleware', req.body);
     }
   }
