@@ -3,16 +3,6 @@ const Blog = require('../models/blog');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
-const getTokenFrom = (req) => {
-  //todo decode token, if it exists, and send it to next route - otherwise send auth error response.
-  const authorization = req.get('authorization');
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    authorization.substring(7);
-  }
-
-
-};
-
 blogsRouter.get('/', async (req, res) => {
   const blogs = await Blog.find({})
     .populate('user', {username: 1, name: 1});
@@ -20,12 +10,7 @@ blogsRouter.get('/', async (req, res) => {
 });
 
 blogsRouter.post('/', async (req, res) => {
-  const token = getTokenFrom(req);
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  if (!token || !decodedToken.id) {
-    return res.status(401).json({error: 'invalid username or password'});
-  }
-  const user = await User.findById(decodedToken.id);
+  const user = await User.findById(req.body.decodedToken.id);
   const blogs = new Blog({...req.body, user: user._id});
 
   const savedBlog = await blogs.save();

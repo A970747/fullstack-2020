@@ -10,21 +10,25 @@ const requestLogger = (req, res, next) => {
 };
 
 const tokenExtractor = (req, res, next) => {
-  const getTokenFrom = (req) => {
-    const authorization = req.get('authorization');
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-      req.decodedToken = authorization.substring(7);
+  console.log('in the tokenExtractor');
+  const authorization = req.get('Authorization');
+  console.log(authorization);
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    console.log(authorization.substring(7));
+    const token = authorization.substring(7);
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    console.log('in the TE', token, decodedToken);
+
+    if (!token || !decodedToken.id) {
+      return res.status(401).json({error: 'invalid username or password'});
+    } else {
+      req.body.decodedToken = decodedToken;
+      console.log('middleware', req.body);
     }
-    return null;
-  };
+  }
 
-  const token = getTokenFrom(req);
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  if (!token || !decodedToken.id) {
-    return res.status(401).json({error: 'invalid username or password'});
-
-  next();
-}
+  return next();
+};
 
 const unknownEndpoint = (req, res) => {
   res.status(404).send({error: 'Unknown endpoint'});
@@ -47,6 +51,7 @@ const errorHandler = (error, req, res, next) => {
 
 module.exports = {
   requestLogger,
+  tokenExtractor,
   unknownEndpoint,
   errorHandler,
 };

@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRlZmF1bHQgVXNlcjEiLCJpZCI6IjVmZGZiZTcxNWYxNzhjNzZiMmY4MTZhOSIsImlhdCI6MTYwODY3NzY4Mn0.ExWxUF0Ezl0vz59SGjF5E21CoiANYo7h7awI_5kZj6w
 
 {
   "title": "Third blog",
   "author": "Queen Elizabeth",
   "url": "www.fakeurl.com",
-  "likes": 0,
-  "userid": "5fdf6733b6c4332351d0efa2"
+  "likes": 0
 }
