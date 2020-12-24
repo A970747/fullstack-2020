@@ -26,6 +26,7 @@ beforeEach(async () => {
     username: initialUsers[0].username,
     name: initialUsers[0].name,
     passwordHash,
+    _id: '5fe4ff2cbeadf3428d657fe6',
   });
 
   await user.save();
@@ -103,7 +104,6 @@ describe('with one user in db', ()=> {
       .expect(400);
   });
 });
-
 
 afterAll(async () => {
   await mongoose.connection.close();

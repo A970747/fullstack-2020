@@ -10,16 +10,9 @@ const requestLogger = (req, res, next) => {
 };
 
 const tokenExtractor = (req, res, next) => {
-  console.log('in the tokenExtractor');
   const authorization = req.get('Authorization');
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    const token = authorization.substring(7);
-    if (!token) {
-      return res.status(401).json({error: 'invalid username or password'});
-    } else {
-      req.body.token = token;
-      console.log('middleware', req.body);
-    }
+    req.body.token = authorization.substring(7);
   }
 
   return next();

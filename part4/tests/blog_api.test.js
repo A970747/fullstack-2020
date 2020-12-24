@@ -7,6 +7,7 @@ const {
   blogPostNoTitle,
   blogPostNoUrl,
   updateFirstBlog,
+  tokenForTests,
   blogsInDb,
 } = require('./test_helper');
 const Blog = require('../models/blog');
@@ -15,6 +16,10 @@ const api = supertest(app);
 const config = require('../utils/config');
 
 
+/*
+* May need this if return contains an object, eg. Date.
+* const processBlog = JSON.parse(JSON.stringify(firstBlog));
+*/
 beforeEach(async () => {
   await mongoose.connect(config.URI,
     {
@@ -62,6 +67,7 @@ describe('adding new blogs', () => {
   test('a new blog post can be added', async () => {
     await api
       .post('/api/blogs')
+      .set('Authorization', tokenForTests)
       .send(newBlogPost)
       .expect(201)
       .expect('Content-Type', /application\/json/);
@@ -71,7 +77,7 @@ describe('adding new blogs', () => {
 
     expect(res).toHaveLength(initialBlogPosts.length + 1);
     expect(res[initialBlogPosts.length].title).toEqual(newBlogPost.title);
-    expect(contents).toContain('Breaking Bad');
+    expect(contents).toContain('Third blog');
   });
 
   test('blog without content cannot be posted', async () => {
@@ -86,11 +92,13 @@ describe('adding new blogs', () => {
   test('blog without Title and/or URL gives status 400', async () => {
     await api
       .post('/api/blogs')
+      .set('Authorization', tokenForTests)
       .send(blogPostNoTitle)
       .expect(400);
 
     await api
       .post('/api/blogs')
+      .set('Authorization', tokenForTests)
       .send(blogPostNoUrl)
       .expect(400);
   });
@@ -98,6 +106,7 @@ describe('adding new blogs', () => {
   test('blog likes property default is 0', async () => {
     await api
       .post('/api/blogs')
+      .set('Authorization', tokenForTests)
       .send(blogPostNoLikes)
       .expect(201)
       .expect('Content-Type', /application\/json/);
@@ -111,16 +120,13 @@ describe('adding new blogs', () => {
 describe('viewing specific blogs', () => {
   test('get info for unique blog by id', async () => {
     const blogs = await blogsInDb();
-    const firstBlog = blogs[0];
 
     const resultBlog = await api
-      .get(`/api/blogs/${firstBlog.id}`)
+      .get(`/api/blogs/${blogs[0].id}`)
       .expect(200)
       .expect('Content-Type', /application\/json/);
 
-    /* May need this if return contains an object, eg. Date.
-    const processBlog = JSON.parse(JSON.stringify(firstBlog));  */
-    expect(resultBlog.body).toEqual(firstBlog);
+    expect(resultBlog.body).toEqual(blogs[0]);
   });
 
   test('fails with status code 404 if id doesnt exist', async () => {
@@ -150,17 +156,17 @@ describe('testing put requests', () => {
 describe('deletion of a blog', () => {
   test('blog can be deleted', async () => {
     const initialBlogs = await blogsInDb();
-    const firstBlog = initialBlogs[0];
 
     await api
-      .delete(`/api/blogs/${firstBlog.id}`)
+      .delete(`/api/blogs/${initialBlogs[0].id}`)
+      .set('Authorization', tokenForTests)
       .expect(204);
 
     const afterDeleteBlogs = await blogsInDb();
     expect(afterDeleteBlogs).toHaveLength(initialBlogPosts.length - 1);
 
     const contents = afterDeleteBlogs.map((blog) => blog.title);
-    expect(contents).not.toContain(firstBlog.title);
+    expect(contents).not.toContain(initialBlogs[0].title);
   });
 
   test('fails with status 404 if deleted passed a valid, non-existing id',
@@ -168,6 +174,7 @@ describe('deletion of a blog', () => {
       const validObjectID = '5e63c3a5e4232e4cd0274ac2';
       await api
         .delete(`/api/blogs/${validObjectID}`)
+        .set('Authorization', tokenForTests)
         .expect(404);
     });
 });

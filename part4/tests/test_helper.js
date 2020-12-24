@@ -1,6 +1,7 @@
 const Blog = require('../models/blog');
 const User = require('../models/user');
-const userId = '5fdf86fb33612a3f2adbdd59';
+const userId = '5fe4ff2cbeadf3428d657fe6';
+const tokenForTests = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRlZmF1bHQgVXNlcjEiLCJpZCI6IjVmZTRmZjJjYmVhZGYzNDI4ZDY1N2ZlNiIsImlhdCI6MTYwODg0NDY0NH0.xj2K3KFYJW5dfsfpxDQsTtTJTLvhHmeANqWqs08SwkA'
 
 const initialBlogPosts = [
   {
@@ -8,12 +9,16 @@ const initialBlogPosts = [
     author: 'Matt Jackson',
     url: 'www.pretendURL',
     likes: 5,
+    _id: '5fe506f37d8d754a61857de1',
+    user: userId,
   },
   {
     title: 'Second blog',
     author: 'Jimmy Davidson',
     url: 'www.pretendURL',
     likes: 10,
+    _id: '5fe506f37d8d754a61857de2',
+    user: userId,
   },
 ];
 
@@ -48,10 +53,10 @@ const userNoName= {
 };
 
 const newBlogPost = {
-  title: 'Breaking Bad',
-  author: 'Heisenberg',
-  url: 'www.pretendURL',
-  likes: 20,
+  title: 'Third blog',
+  author: 'Queen Elizabeth',
+  url: 'www.fakeurl.com',
+  likes: 0,
   userid: userId,
 };
 
@@ -110,6 +115,7 @@ module.exports = {
   blogPostNoTitle,
   blogPostNoUrl,
   updateFirstBlog,
+  tokenForTests,
   nonExistingId,
   blogsInDb,
   usersInDb,
