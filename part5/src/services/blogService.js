@@ -1,11 +1,21 @@
-const baseUrl = 'api/blogs';
+import axios from 'axios';
+const baseUrl = '/api/blogs';
+let token = null;
+
+function setToken() {
+  token = `bearer ${token}`;
+}
 
 function getAllBlogPosts() {
   return axios.get(baseUrl).then((res) => res.data);
 };
 
-function createNewBlogPost() {
-  return axios.post(baseUrl).then((res) => res.data);
+function createNewBlogPost(config) {
+  const authToken = {
+    headers: {Authorization: token},
+  };
+
+  return axios.post(baseUrl, config, authToken).then((res) => res.data);
 };
 
 function updateBlogPost() {
@@ -21,4 +31,5 @@ export default {
   createNewBlogPost,
   updateBlogPost,
   deleteRecord,
+  setToken,
 };

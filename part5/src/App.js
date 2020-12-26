@@ -1,5 +1,7 @@
-import React, {useEffect} from 'react';
-import LoginForm from './components/LoginForm';
+import React, {useState, useEffect} from 'react';
+import LoginForm from './components/Forms/LoginForm';
+import BlogForm from './components/Forms/BlogForm';
+import Notification from './components/Notification';
 import blogService from './services/blogService';
 
 /**
@@ -15,19 +17,34 @@ import blogService from './services/blogService';
  */
 function App() {
   const [blogs, setBlogs] = useState([]);
-  const [newBlog, setNewBlog] = useState({});
+  const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  console.log(blogs);
 
   useEffect(() => {
     blogService.getAllBlogPosts()
       .then((res) => setBlogs(res));
+
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      blogService.setToken(user.token);
+    }
   }, []);
 
   return (
     <div className="App">
       <h1>Blog Posts</h1>
-      <LoginForm //setUser={setUser}
-      />
+      <Notification message={errorMessage} />
+      {
+        (user === null)
+          ? <LoginForm setUser={setUser} setErrorMessage={setErrorMessage}/>
+          : <div>
+              <p>{user.name} logged in</p>
+              <BlogForm setErrorMessage={setErrorMessage}/>
+            </div>
+      }
     </div>
   );
 }

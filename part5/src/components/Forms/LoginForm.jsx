@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import userService from '../services/userService';
+import blogService from '../../services/blogService';
+import userService from '../../services/userService';
 
 /**
  * Component for showing details of the user.
@@ -12,18 +13,23 @@ import userService from '../services/userService';
  *   <User age={age} name={name} />
  * )
  */
-function loginForm({setUser}) {
+function loginForm({setUser, setErrorMessage}) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
   function handleLogin(event) {
     event.preventDefault();
-    
+
     userService.userLogin({username: userName, password})
       .then((user) => {
-        setUser(user);
+        window.localStorage.setItem(
+          'loggedBlogAppUser', JSON.stringify(user),
+        );
+
+        blogService.setToken(user.token);
         setUserName('');
         setPassword('');
+        setUser(user);
       })
       .catch((error) => {
         setErrorMessage('Wrong credentials');

@@ -44,17 +44,8 @@ module.exports = {
   ],
   'rules': {
     'indent': [
-      'error',
+      1,
       2,
     ],
-  "require-jsdoc": ["error", {
-    "require": {
-        "FunctionDeclaration": false,
-        "MethodDefinition": false,
-        "ClassDeclaration": false,
-        "ArrowFunctionExpression": false,
-        "FunctionExpression": false
-    }
-  }]
   },
 };
