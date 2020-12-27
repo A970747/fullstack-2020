@@ -32,7 +32,7 @@ function loginForm({setUser, setErrorMessage}) {
         setUser(user);
       })
       .catch((error) => {
-        setErrorMessage('Wrong credentials');
+        setErrorMessage(error.message);
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);

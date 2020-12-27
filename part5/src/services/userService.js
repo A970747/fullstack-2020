@@ -6,7 +6,6 @@ function addNewUser() {
 }
 
 function userLogin(credentials) {
-  console.log(credentials);
   return axios.post(baseUrl, credentials).then((res)=> res.data);
 }
 

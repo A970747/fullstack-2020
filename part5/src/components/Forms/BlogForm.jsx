@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import blogService from '../../services/blogService';
 
-function blogForm({}) {
+function blogForm({setErrorMessage}) {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [likes, setLikes] = useState('');
@@ -12,13 +12,17 @@ function blogForm({}) {
 
     blogService.createNewBlogPost({title, author, url, likes})
       .then((res) => {
+        setErrorMessage(`New blog ${res.title} by ${res.author} added`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
         setTitle('');
         setAuthor('');
-        setUrl('');
         setLikes('');
+        setUrl('');
       })
       .catch((error) => {
-        setErrorMessage('Error creating blog');
+        setErrorMessage(error.message);
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);

@@ -1,9 +1,9 @@
 import axios from 'axios';
 const baseUrl = '/api/blogs';
-let token = null;
+let token;
 
-function setToken() {
-  token = `bearer ${token}`;
+function setToken(auth) {
+  token = `bearer ${auth}`;
 }
 
 function getAllBlogPosts() {
@@ -14,7 +14,6 @@ function createNewBlogPost(config) {
   const authToken = {
     headers: {Authorization: token},
   };
-
   return axios.post(baseUrl, config, authToken).then((res) => res.data);
 };
 
