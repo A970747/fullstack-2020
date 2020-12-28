@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import LoginForm from './components/Forms/LoginForm';
 import BlogForm from './components/Forms/BlogForm';
 import Notification from './components/Notification';
 import blogService from './services/blogService';
 import LogOutButton from './components/LogOutButton';
 import Blog from './components/Blog';
+import Togglable from './components/Togglable';
 
 /**
  * Component for showing details of the user.
@@ -21,6 +22,7 @@ function App() {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const blogFormRef = useRef();
 
   useEffect(() => {
     blogService.getAllBlogPosts()
@@ -36,18 +38,39 @@ function App() {
     }
   }, []);
 
+  function loginForm() {
+    return (
+      <Togglable buttonLabel='Login'>
+        <LoginForm setUser={setUser} setErrorMessage={setErrorMessage}/>
+      </Togglable>
+    );
+  }
+
+  function blogForm() {
+    return (
+      <Togglable buttonLabel='Post Blog' ref={blogFormRef}>
+        <BlogForm setErrorMessage={setErrorMessage}
+          setBlogs={setBlogs}
+          blogFormRef={blogFormRef}
+        />
+      </Togglable>
+    );
+  }
+
   return (
     <div className="App">
       <h1>Blog Posts</h1>
       <Notification message={errorMessage} />
       {
         (user === null)
-          ? <LoginForm setUser={setUser} setErrorMessage={setErrorMessage}/>
+          ? loginForm()
           : <div>
               <p>{user.name} logged in</p>
               <LogOutButton setUser={setUser} />
-              <BlogForm setErrorMessage={setErrorMessage}/>
             </div>
+      }
+      {
+        blogForm()
       }
       <div>
         {

@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import blogService from '../../services/blogService';
 import userService from '../../services/userService';
 
 /**
- * Component for showing details of the user.
- *
+ * Renders a Form component
+ * @name LoginForm
  * @component
- * @example
- * const age = something
- * const name = something
- * @return (
- *   <User age={age} name={name} />
- * )
+ * @property {string} userName - stores value from user text user name input
+ * @property {string} password - stores value from user password input
+ *
+ * @param {function} setUser - set user info in state in App.js
+ * @param {function} setErrorMessage - set displayed message for 5 seconds
  */
-function loginForm({setUser, setErrorMessage}) {
+
+function LoginForm({setUser, setErrorMessage}) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
@@ -56,4 +57,9 @@ function loginForm({setUser, setErrorMessage}) {
   );
 };
 
-export default loginForm;
+LoginForm.propTypes = {
+  setErrorMessage: PropTypes.func,
+  setUser: PropTypes.func,
+};
+
+export default LoginForm;

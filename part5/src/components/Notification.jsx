@@ -1,5 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const notification = ({message}) => <p className='ErrorMessage'>{message}</p>;
+const Notification = ({message}) => <p className='ErrorMessage'>{message}</p>;
 
-export default notification;
+Notification.propTypes = {
+  message: PropTypes.string.isRequired,
+};
+
+export default Notification;
