@@ -27,6 +27,7 @@ module.exports = {
   'env': {
     'browser': true,
     'es2021': true,
+    "jest/globals": true,
   },
   'extends': [
     'plugin:react/recommended',
@@ -36,11 +37,12 @@ module.exports = {
     'ecmaFeatures': {
       'jsx': true,
     },
-    'ecmaVersion': 12,
-    'sourceType': 'module',
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   'plugins': [
-    'react',
+    'react', 
+    'jest',
   ],
   'rules': {
     'indent': [

@@ -2,7 +2,7 @@ import React, {useState, useImperativeHandle} from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * Renders a Form component
+ * Toggles display:none to hide wrapped child components
  * @name Togglable
  * @component
  * @property {string} userName - stores value from user text user name input

@@ -70,7 +70,7 @@ function BlogForm({setErrorMessage, setBlogs, blogFormRef}) {
             onChange={({target})=> setLikes(target.value)}
           />
         </label>
-        <button type='submit'>submit</button>
+        <button type='submit'>create</button>
       </form>
     </div>
   );
@@ -79,7 +79,7 @@ function BlogForm({setErrorMessage, setBlogs, blogFormRef}) {
 BlogForm.propTypes = {
   setErrorMessage: PropTypes.func,
   setBlogs: PropTypes.func,
-  blogFormRef: PropTypes.Object,
+  blogFormRef: PropTypes.object,
 };
 
 export default BlogForm;

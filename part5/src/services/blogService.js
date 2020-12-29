@@ -7,7 +7,9 @@ function setToken(auth) {
 }
 
 function getAllBlogPosts() {
-  return axios.get(baseUrl).then((res) => res.data);
+  return axios.get(baseUrl)
+    .then((res) => res.data)
+    .catch((error)=> console.log(error.response));
 };
 
 function createNewBlogPost(config) {
@@ -17,18 +19,25 @@ function createNewBlogPost(config) {
   return axios.post(baseUrl, config, authToken).then((res) => res.data);
 };
 
-function updateBlogPost() {
-  return axios.put(`${baseUrl}/${id}`).then((res)=> res.data);
+function updateBlogPost(id, config) {
+  const authToken = {
+    headers: {Authorization: token},
+  };
+  return axios.put(`${baseUrl}/${id}`, config, authToken)
+    .then((res)=> res.data);
 };
 
-function deleteRecord() {
-  return axios.delete(`${baseUrl}/${id}`);
+function deleteBlogPost(id) {
+  const authToken = {
+    headers: {Authorization: token},
+  };
+  return axios.delete(`${baseUrl}/${id}`, authToken);
 };
 
 export default {
   getAllBlogPosts,
   createNewBlogPost,
   updateBlogPost,
-  deleteRecord,
+  deleteBlogPost,
   setToken,
 };

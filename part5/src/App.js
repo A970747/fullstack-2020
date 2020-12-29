@@ -26,7 +26,8 @@ function App() {
 
   useEffect(() => {
     blogService.getAllBlogPosts()
-      .then((res) => setBlogs(res));
+      .then((res) => setBlogs(res))
+      .catch((error)=> console.log(error.response));
   }, []);
 
   useEffect(() => {
@@ -65,16 +66,19 @@ function App() {
         (user === null)
           ? loginForm()
           : <div>
-              <p>{user.name} logged in</p>
-              <LogOutButton setUser={setUser} />
-            </div>
+            <p>{user.name} logged in</p>
+            <LogOutButton setUser={setUser} />
+          </div>
       }
       {
         blogForm()
       }
       <div>
         {
-          blogs.map((blog) => <Blog key={blog.id} blog={blog} />)
+          (blogs)
+            ? blogs.map((blog) =>
+              <Blog key={blog.id} blog={blog} setBlogs={setBlogs}/>)
+            : <></>
         }
       </div>
     </div>
