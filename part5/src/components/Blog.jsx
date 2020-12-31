@@ -45,7 +45,7 @@ function Blog({blog: {title, author, url, likes, user, id}, setBlogs} = {}) {
   }
 
   return (
-    <div>
+    <div className={'blog'}>
       <h3>{title}</h3>
       <button onClick={handleViewClick}>view</button>
       <div style={toggleView}>
