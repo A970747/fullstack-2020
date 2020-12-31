@@ -1,5 +1,3 @@
-const { off } = require("./models/blog");
-
 module.exports = {
   'env': {
     'commonjs': true,

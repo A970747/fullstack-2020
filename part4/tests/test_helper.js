@@ -24,9 +24,9 @@ const initialBlogPosts = [
 
 const initialUsers = [
   {
-    username: 'Default User1',
+    username: 'mjackson',
     name: 'User1',
-    password: 'uruguay',
+    password: 'password',
   },
   {
     username: 'Default User2',

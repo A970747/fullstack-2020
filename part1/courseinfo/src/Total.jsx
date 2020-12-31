@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Total = ({course: { parts, ...rest }}) => {
+const Total = ({course: { parts }}) => {
   const [exerciseCount, setExerciseCount] = useState(parts.map(e => e.exercises))
 
   return (

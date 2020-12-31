@@ -15,7 +15,7 @@ const updateRecord = (id, newData) => {
 }
 
 const deleteRecord = (id) => {
-  return (axios.delete(`${baseUrl}/${id}`));
+  return axios.delete(`${baseUrl}/${id}`);
 }
 
 export default { getRecords, createRecord, updateRecord, deleteRecord };
