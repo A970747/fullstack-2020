@@ -51,7 +51,7 @@ function Blog({blog: {title, author, url, likes, user, id}, setBlogs} = {}) {
       <div style={toggleView}>
         <p>{author}</p>
         <a href={url} rel="noopener noreferrer">{url}</a>
-        <p>{likes}
+        <p>likes: {likes}
           <button onClick={handleLikeClick}>like</button>
         </p>
       </div>

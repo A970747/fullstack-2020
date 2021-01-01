@@ -46,7 +46,7 @@ function BlogForm({setErrorMessage, setBlogs, blogFormRef}) {
   };
 
   return (
-    <div>
+    <div className='formDiv'>
       <h2>Post new blog info</h2>
 
       <form onSubmit={handleSubmit}>

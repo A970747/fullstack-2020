@@ -1,21 +1,27 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import Blog from './Blog';
+import Togglable from './Togglable';
 
 describe('testing Blog component', () => {
-  test('renders content', () => {
-    const blog = {
-      title: 'Test Blog',
-      author: 'Matt Jackson',
-      url: 'www.testingURL.com',
-      likes: 0,
-    };
+  let component;
+  const blog = {
+    title: 'Test Blog',
+    author: 'Matt Jackson',
+    url: 'www.testingURL.com',
+    likes: 0,
+  };
 
-    const component = render(
-      <Blog blog={blog} />,
+  beforeEach(() => {
+    component = render(
+      <Togglable buttonLabel='show'>
+        <Blog blog={blog} />
+      </Togglable>,
     );
+  });
 
+  test('renders content', () => {
     expect(component.container).toHaveTextContent('Test Blog');
 
     const element = component.getByText('Test Blog');
