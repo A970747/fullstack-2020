@@ -15,6 +15,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-nowatch": "CI=true npm test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "docs": "jsdoc -c jsdoc.conf.json"
