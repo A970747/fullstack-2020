@@ -43,16 +43,16 @@ function LoginForm({setUser, setErrorMessage}) {
   return (
     <form onSubmit={handleLogin}>
       <label>Username:
-        <input type='text' value={userName}
+        <input id='username' type='text' value={userName}
           onChange={({target})=> setUserName(target.value)}
         />
       </label>
       <label>Password:
-        <input type='password' value={password}
+        <input id='password' type='password' value={password}
           onChange={({target})=> setPassword(target.value)}
         />
       </label>
-      <button type='submit'>login</button>
+      <button id='login-button' type='submit'>login</button>
     </form>
   );
 };
