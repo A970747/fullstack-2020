@@ -6,7 +6,7 @@ function addNewUser() {
 }
 
 function userLogin(credentials) {
-  return axios.post(baseUrl, credentials).then((res)=> res.data);
+  return axios.post(baseUrl, credentials).then((res) => res.data);
 }
 
 export default {addNewUser, userLogin};

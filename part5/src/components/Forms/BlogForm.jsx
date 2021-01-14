@@ -51,26 +51,26 @@ function BlogForm({setErrorMessage, setBlogs, blogFormRef}) {
 
       <form onSubmit={handleSubmit}>
         <label>Title:
-          <input type='text' value={title}
+          <input id='blogTitle' type='text' value={title}
             onChange={({target})=> setTitle(target.value)}
           />
         </label>
         <label>Author:
-          <input type='text' value={author}
+          <input id='blogAuthor' type='text' value={author}
             onChange={({target})=> setAuthor(target.value)}
           />
         </label>
         <label>URL:
-          <input type='text' value={url}
+          <input id='blogUrl' type='text' value={url}
             onChange={({target})=> setUrl(target.value)}
           />
         </label>
         <label>Likes:
-          <input type='text' value={likes}
+          <input id='blogLikes' type='text' value={likes}
             onChange={({target})=> setLikes(target.value)}
           />
         </label>
-        <button type='submit'>create</button>
+        <button id='blogSubmit' type='submit'>create</button>
       </form>
     </div>
   );

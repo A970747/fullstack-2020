@@ -33,7 +33,7 @@ function LoginForm({setUser, setErrorMessage}) {
         setUser(user);
       })
       .catch((error) => {
-        setErrorMessage(error.message);
+        setErrorMessage(error.response.data.error);
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);

@@ -19,7 +19,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "docs": "jsdoc -c jsdoc.conf.json",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [
