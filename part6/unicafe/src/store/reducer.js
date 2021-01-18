@@ -20,3 +20,10 @@ const counterReducer = (state = initialState, action) => {
 }
 
 export default counterReducer
+
+"528": {
+  "52": {
+    dayOfWeek: [1,2,3,4],
+    depositAmount: [$,$,$],
+  }
+}
