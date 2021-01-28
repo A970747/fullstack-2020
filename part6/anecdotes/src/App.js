@@ -10,6 +10,11 @@ const App = () => {
     console.log('vote', id)
   }
 
+  const addAnecdote = (e) => {
+    e.preventDefault();
+    dispatch({type: "ADD_NOTE", data: { anecdote: e.target.elements[0].value}});
+  }
+
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -25,9 +30,12 @@ const App = () => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        addAnecdote(e);
+        }}>
         <div><input /></div>
-        <button>create</button>
+        <button type="submit">create</button>
       </form>
     </div>
   );

@@ -22,6 +22,8 @@ const initialState = anecdotesAtStart.map(asObject)
 const reducer = (state = initialState, action) => {
   console.log("calling with", action);
   switch(action.type) {
+    case "ADD_NOTE":
+      return state.concat(asObject(action.data.anecdote))
     case "INCREMENT_VOTE":
       return state.map(anecdote => {
         if(action.data.id === anecdote.id) {
