@@ -20,6 +20,19 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
+  console.log("calling with", action);
+  switch(action.type) {
+    case "INCREMENT_VOTE":
+      return state.map(anecdote => {
+        if(action.data.id === anecdote.id) {
+          anecdote.votes = anecdote.votes + 1;
+          return anecdote;
+        }
+        return anecdote
+      })
+    default:
+      return state;
+  }
   console.log('state now: ', state)
   console.log('action', action)
 

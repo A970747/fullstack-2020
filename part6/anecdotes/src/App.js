@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
-
+  
   const vote = (id) => {
+    dispatch({type: "INCREMENT_VOTE", data: { id }});
     console.log('vote', id)
   }
 
