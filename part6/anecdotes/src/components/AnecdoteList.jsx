@@ -1,5 +1,5 @@
 import React from 'react';
-import { addVote } from '../reducers/anecdoteReducer';
+import { addVote } from '../store/actions/anecdoteActions';
 import { useSelector, useDispatch } from 'react-redux'
 
 function AnecdoteList() {
@@ -30,4 +30,3 @@ function AnecdoteList() {
 };
 
 export default AnecdoteList;
-

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
-import { addNote } from '../reducers/anecdoteReducer';
+import { addNote } from '../store/actions/anecdoteActions';
 
 function AddAnecdote() {
   const dispatch = useDispatch()
